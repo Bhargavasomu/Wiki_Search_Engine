@@ -1,6 +1,7 @@
 import heapq
 import os
 from util import get_champions_list
+from util import get_tfidf_added_list
 
 def merge_indexes(index_type, num_temp_index_files, total_number_documents):
     '''
@@ -78,7 +79,9 @@ def merge_indexes(index_type, num_temp_index_files, total_number_documents):
         least_word_posting_list = least_word_posting_list[1:]
 
         # Making the champion list. This also adds the tfidf value in each posting
-        least_word_champion_list = get_champions_list(least_word_posting_list, total_number_documents, 1000)
+        # least_word_champion_list = get_champions_list(least_word_posting_list, total_number_documents, 1000)
+        # Adding the tfidf values to the posting list, without champions
+        least_word_champion_list = get_tfidf_added_list(least_word_posting_list, total_number_documents)
         # Writing the result to the main index file
         line_to_write = least_word + ":" + least_word_champion_list + "\n"
         f_primary_index.write(line_to_write)
@@ -125,3 +128,15 @@ def merge_indexes(index_type, num_temp_index_files, total_number_documents):
     f_secondary_index.close()
     for key in list_file_pointers:
         list_file_pointers[key].close()
+
+
+def main():
+    num_temp_index_files = 177
+    files_processed = 17640866
+    merge_indexes("global", num_temp_index_files, files_processed)
+    merge_indexes("title", num_temp_index_files, files_processed)
+    merge_indexes("body", num_temp_index_files, files_processed)
+    merge_indexes("category", num_temp_index_files, files_processed)
+    merge_indexes("infobox", num_temp_index_files, files_processed)
+    merge_indexes("references", num_temp_index_files, files_processed)
+    merge_indexes("external_links", num_temp_index_files, files_processed)
