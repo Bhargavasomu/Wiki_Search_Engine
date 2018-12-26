@@ -165,9 +165,14 @@ def show_results(query_terms, primary_indexes_fp_dicts, secondary_indexes_dicts)
             break
         doc_id = result[1]
         page_title = get_page_title_from_id(doc_id, page_id_title_filename)
-        if not page_title.startswith('Wikipedia:'):
+        if len(sorted_results) <= 10:
+            # Don't delete the wikipedia pages if the number of results are below 10
             files_showed += 1
             print doc_id, result[0], page_title
+        else:
+            if not page_title.startswith('Wikipedia:'):
+                files_showed += 1
+                print doc_id, result[0], page_title
     print
 
     return
