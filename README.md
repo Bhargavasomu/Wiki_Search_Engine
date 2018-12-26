@@ -1,5 +1,5 @@
 # Wiki_Search_Engine
-Indexing and Quering on Wiki Dump of 60 GB
+Indexing and Quering on Wiki Dump of 60 GB (XML Wiki dump)
 
 ## Instructions to generate the Normal Index
 The command is - 'python index.py <Path to the Data xml file>'
